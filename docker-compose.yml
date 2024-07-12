@@ -1,0 +1,60 @@
+services:
+  nginx:
+    container_name: nginx_${PROJECT_NAME}
+    image: "nginx:stable-alpine"
+    env_file:
+      - .env
+    ports:
+      - ${HTTP_PORT}:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ${WORKDIR}:/var/www/laravel
+    depends_on:
+      - mysql
+      - php
+
+  php:
+    container_name: php_${PROJECT_NAME}
+    build:
+      context: dockerfiles
+      dockerfile: php.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ${WORKDIR}:/var/www/laravel
+    user: ${USER_ID}:${GROUP_ID}
+
+  mysql:
+    container_name: mysql_${PROJECT_NAME}
+    image: mysql:8.0
+    env_file:
+      - .env
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+  composer:
+    container_name: composer_${PROJECT_NAME}
+    build:
+      context: dockerfiles
+      dockerfile: composer.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ${WORKDIR}:/var/www/laravel
+
+  artisan:
+    container_name: artisan_${PROJECT_NAME}
+    build:
+      context: dockerfiles
+      dockerfile: php.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ${WORKDIR}:/var/www/laravel
+    entrypoint: ["php", "/var/www/laravel/artisan"]
+    user: ${USER_ID}:${GROUP_ID}
+
+volumes:
+  db_data:
