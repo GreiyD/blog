@@ -54,6 +54,7 @@ services:
     volumes:
       - ${WORKDIR}:/var/www/laravel
     entrypoint: ["php", "/var/www/laravel/artisan"]
+    user: ${USER_ID}:${GROUP_ID}
 
 volumes:
   db_data:
