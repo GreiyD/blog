@@ -27,12 +27,13 @@ Route::controller(ProfileController::class)->group(function () {
 Route::middleware(['user.auth'])->group(function () {
     Route::view('/post/create', "post.create")->name('posts.create');
 
-    Route::controller(PostController::class, '')->group(function () {
+    Route::controller(PostController::class)->group(function () {
         Route::get('/posts','index')->name('posts.index');
         Route::get('/posts/{post}','show')->name('posts.show');
         Route::get('/posts/{post}/edit','edit')->name('posts.edit');
         Route::put('/posts/{post}','update')->name('posts.update');
         Route::delete('/posts/{post}','destroy')->name('posts.destroy');
         Route::post('/posts','store')->name('posts.store');
+        Route::post('/posts/{post}/reactions','handleReaction')->name('posts.reaction');
     });
 });
