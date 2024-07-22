@@ -18,23 +18,23 @@
 
                         <div class="row justify-content-between">
                             <div class="col-6 text-start">
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+                                <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
                             </div>
                             <div class="col-6 text-end">
-                                <form action="" method="POST" style="display: inline;">
+                                <a type="button" class="btn btn-outline-success" href="" onclick="event.preventDefault(); document.getElementById('like').submit();">
+                                    Like:{{$post->likes}}
+                                </a>
+                                <form id="like" action="{{route('posts.reaction', $post->id)}}" method="POST" style="display: none;">
                                     @csrf
-                                    <input type="hidden" name="type" value="1">
-                                    <button type="submit" class="btn btn-outline-success">
-                                        Like: {{ $post->likes }}
-                                    </button>
+                                    <input type="hidden" name="reaction" value="1">
                                 </form>
 
-                                <form action="" method="POST" style="display: inline;">
+                                <a type="button" class="btn btn-outline-danger" href="" onclick="event.preventDefault(); document.getElementById('dislike').submit();">
+                                    Dislike:{{$post->dislikes}}
+                                </a>
+                                <form id="dislike" action="{{route('posts.reaction', $post->id)}}" method="POST" style="display: none;">
                                     @csrf
-                                    <input type="hidden" name="type" value="0">
-                                    <button type="submit" class="btn btn-outline-danger">
-                                        Dislike: {{ $post->dislikes }}
-                                    </button>
+                                    <input type="hidden" name="reaction" value="0">
                                 </form>
                             </div>
                         </div>

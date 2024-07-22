@@ -2,15 +2,15 @@
 
 @section('title', 'My Posts')
 @section('content')
-    <div class="container mt-5">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-9">
-                <div class="row">
+                <div class="row mt-5">
                     @foreach($posts as $post)
-                        @include('post.post-card', ['post' => $post])
+                        <div class="col-md-10">
+                            @include('post.post-card', ['post' => $post])
+                        </div>
                     @endforeach
                 </div>
-            </div>
         </div>
     </div>
 @endsection

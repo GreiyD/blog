@@ -1,6 +1,6 @@
 <div class="card mb-5">
     @if($post->photo_path)
-        <div>
+        <div class="px-2">
             <img src="{{ asset('storage/' . $post->photo_path) }}" class="card-img-top mt-2" alt="Post photo">
         </div>
     @endif
@@ -14,20 +14,19 @@
                 <small class="text-muted">Added: {{ $post->created_at->format('d M Y H:i') }}</small>
             </div>
             <div class="col-5 text-end">
-                <a type="button" class="btn btn-outline-success" href="" onclick="event.preventDefault(); document.getElementById('like').submit();">
-                    Like: {{ $post->likes }}
+                <a type="button" class="btn btn-outline-success" href="" onclick="event.preventDefault(); document.getElementById('like-{{ $post->id }}').submit();">
+                    Like:{{ $post->likes }}
                 </a>
-                <form id="like" action="" method="POST" style="display: none;">
+                <form id="like-{{ $post->id }}" action="{{route('posts.reaction', $post->id)}}" method="POST" style="display: none;">
                     @csrf
-                    <input type="hidden" name="type" value="1">
+                    <input type="hidden" name="reaction" value="1">
                 </form>
-
-                <a type="button" class="btn btn-outline-danger" href="" onclick="event.preventDefault(); document.getElementById('dislike').submit();">
-                    Dislike: {{ $post->dislikes }}
+                <a type="button" class="btn btn-outline-danger" href="" onclick="event.preventDefault(); document.getElementById('dislike-{{ $post->id }}').submit();">
+                    Dislike:{{ $post->dislikes }}
                 </a>
-                <form id="dislike" action="" method="POST" style="display: none;">
+                <form id="dislike-{{ $post->id }}" action="{{route('posts.reaction', $post->id)}}" method="POST" style="display: none;">
                     @csrf
-                    <input type="hidden" name="type" value="0">
+                    <input type="hidden" name="reaction" value="0">
                 </form>
 
                 <div class="btn-group">
