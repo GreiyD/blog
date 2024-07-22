@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Contracts\Reactionable;
 use App\Enums\PostStatus;
+use App\Enums\ReactionType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Post extends Model
+class Post extends Model implements Reactionable
 {
     use HasFactory;
 
@@ -27,8 +30,18 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function reactions()
+    public function reactions(): MorphMany
     {
-        return $this->hasMany(PostReaction::class);
+        return $this->morphMany(Reaction::class, 'reactionable');
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Reaction::class, 'reactionable')->where('type', ReactionType::Like);
+    }
+
+    public function dislikes()
+    {
+        return $this->morphMany(Reaction::class, 'reactionable')->where('type', ReactionType::Dislike);
     }
 }
