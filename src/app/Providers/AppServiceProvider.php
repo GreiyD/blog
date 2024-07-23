@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contracts\ImageStorageServiceContract;
 use App\Services\ImageLocalStorageService;
 use App\Services\ReactionService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::defaultView('components.pagination');
     }
 }

@@ -2,20 +2,23 @@
 
 @section('title', 'Home')
 @section('content')
-    <h1>Welcome,
-        @if (Auth::check())
-            {{ Auth::user()->nickname }}
-        @else
-            Guest
-        @endif
-    </h1>
-{{--    <div class="container mt-5">--}}
-{{--        <div class="row justify-content-center">--}}
-{{--            @foreach($post as $post)--}}
-{{--                <div class="col-md-8">--}}
-{{--                    @include('post.post', ['post' => $post])--}}
-{{--                </div>--}}
-{{--            @endforeach--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    <div class="text-center mt-4">
+        <h2>My feed</h2>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="row mt-3">
+                @foreach($posts as $post)
+                    <div class="col-md-10 mx-auto">
+                        @include('post.post-card', ['post' => $post])
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        {{ $posts->links() }}
+    </div>
 @endsection
