@@ -3,9 +3,10 @@
 namespace App\Services;
 
 use App\Contracts\ImageStorageServiceContract;
+use App\Enums\ReactionType;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PostService
 {
@@ -15,14 +16,40 @@ class PostService
         $this->imageStorageService = $imageStorageService;
     }
 
-    public function getUserPosts(User $user): Collection
+    public function getUserPosts(User $user): LengthAwarePaginator
     {
-        return $user->posts()->latest()->get();
+        return $user->posts()->withCount([
+            'reactions as likes' => function ($query) {
+                $query->where('type', ReactionType::Like->value);
+            },
+            'reactions as dislikes' => function ($query) {
+                $query->where('type', ReactionType::Dislike->value);
+            }
+        ])->latest()->paginate(10);
     }
 
     public function getPost(int $postId): Post
     {
-        return Post::findOrFail($postId);
+        return Post::withCount([
+            'reactions as likes' => function ($query) {
+                $query->where('type', ReactionType::Like->value);
+            },
+            'reactions as dislikes' => function ($query) {
+                $query->where('type', ReactionType::Dislike->value);
+            }
+        ])->findOrFail($postId);
+    }
+
+    public function getAllPosts(): LengthAwarePaginator
+    {
+        return Post::withCount([
+            'reactions as likes' => function ($query) {
+                $query->where('type', ReactionType::Like->value);
+            },
+            'reactions as dislikes' => function ($query) {
+                $query->where('type', ReactionType::Dislike->value);
+            }
+        ])->latest()->paginate(10);
     }
 
     public function createPost(User $user, array $data): Post

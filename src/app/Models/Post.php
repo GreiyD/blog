@@ -20,7 +20,10 @@ class Post extends Model implements Reactionable
         'status',
         'photo_path',
     ];
-
+    protected $appends = [
+        'likes',
+        'dislikes']
+    ;
     protected $casts = [
         'status' => PostStatus::class,
     ];
@@ -43,5 +46,15 @@ class Post extends Model implements Reactionable
     public function dislikes()
     {
         return $this->morphMany(Reaction::class, 'reactionable')->where('type', ReactionType::Dislike);
+    }
+
+    public function getLikesAttribute()
+    {
+        return $this->attributes['likes'] ?? null;
+    }
+
+    public function getDislikesAttribute()
+    {
+        return $this->attributes['dislikes'] ?? null;
     }
 }
