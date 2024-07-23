@@ -23,14 +23,4 @@ class ReactionService
             ]);
         }
     }
-
-    public function getLikesCount(Reactionable $reactionable): int
-    {
-        return $reactionable->likes()->count();
-    }
-
-    public function getDislikesCount(Reactionable $reactionable): int
-    {
-        return $reactionable->dislikes()->count();
-    }
 }

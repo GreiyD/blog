@@ -25,10 +25,6 @@ class PostController extends Controller
     {
         $user = $request->user;
         $posts = $this->postService->getUserPosts($user);
-        $posts->each(function($post) {
-            $post->likes = $this->reactionService->getLikesCount($post);
-            $post->dislikes = $this->reactionService->getDislikesCount($post);
-        });
 
         return view('post.index', compact('posts'));
     }
@@ -45,8 +41,6 @@ class PostController extends Controller
     public function show($postId): View
     {
         $post = $this->postService->getPost($postId);
-        $post->likes = $this->reactionService->getLikesCount($post);
-        $post->dislikes = $this->reactionService->getDislikesCount($post);
 
         return view('post.show', compact('post'));
     }
