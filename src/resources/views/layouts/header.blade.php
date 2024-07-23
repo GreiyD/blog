@@ -8,7 +8,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') ? 'active font-weight-bold' : '' }}" aria-current="page" href="{{route('home')}}">Home</a>
+                        <a class="nav-link {{ request()->is('/') ? 'active font-weight-bold' : '' }}" aria-current="page" href="{{route('home.index')}}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('about') ? 'active font-weight-bold' : '' }}" href="{{route('about')}}">About</a>

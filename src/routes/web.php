@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::view('/', "home")->name('home');
 Route::view('/about', "about")->name('about');
 
 Route::view('/login-form', "auth.loginForm")->name('login.form');
@@ -36,4 +36,8 @@ Route::middleware(['user.auth'])->group(function () {
         Route::post('/posts','store')->name('posts.store');
         Route::post('/posts/{post}/reactions','handleReaction')->name('posts.reaction');
     });
+});
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/','index')->name('home.index');
 });

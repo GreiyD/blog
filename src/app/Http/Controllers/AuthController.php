@@ -16,7 +16,7 @@ class AuthController extends Controller
        $data = $request->only('email', 'password');
 
         if (Auth::attempt($data)) {
-            return redirect()->route('home');
+            return redirect()->route('home.index');
         }
 
         return redirect()->route('login.form')->withErrors([
@@ -29,7 +29,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
 
-        return redirect()->route('home');
+        return redirect()->route('home.index');
     }
 
     public function register(RegisterFormRequest $request, RegisterActionContract $registerUserAction): RedirectResponse
@@ -38,6 +38,6 @@ class AuthController extends Controller
         $user = $registerUserAction($data);
         Auth::login($user);
 
-        return redirect()->route('home');
+        return redirect()->route('home.index');
     }
 }
