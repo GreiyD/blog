@@ -8,13 +8,13 @@
 
     <div class="container">
         <div class="row justify-content-center">
-                <div class="row mt-3">
-                    @foreach($posts as $post)
-                        <div class="col-md-10 mx-auto">
-                            @include('post.post-card', ['post' => $post])
-                        </div>
-                    @endforeach
-                </div>
+            <div class="row mt-3">
+                @foreach($posts as $post)
+                    <div class="col-md-10 mx-auto">
+                        @include('components.post-card', ['post' => $post])
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 

@@ -11,7 +11,7 @@
             <div class="row mt-3">
                 @foreach($posts as $post)
                     <div class="col-md-10 mx-auto">
-                        @include('post.post-card', ['post' => $post])
+                        @include('components.post-card', ['post' => $post])
                     </div>
                 @endforeach
             </div>
