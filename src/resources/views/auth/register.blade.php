@@ -40,7 +40,18 @@
                                 <div style="color: red;">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-outline-primary">Register</button>
+                            <div class="row mt-4 d-flex">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-outline-primary">Register</button>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <small class="text-muted col-md-5 text-end">If you are<br>registered:</small>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-6">
+                                        <a href="{{ route('login.form') }}" class="btn btn-outline-primary d-flex justify-content-center">Sign in</a>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

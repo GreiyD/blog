@@ -27,12 +27,13 @@
                                 @enderror
                             </div>
                             <div class="row mt-4 d-flex">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <button type="submit" class="btn btn-outline-primary">Sign in</button>
                                 </div>
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <small class="text-muted col-sm-6">If you are not<br>registered yet:</small>
-                                    <div class="col-sm-6">
+                                <div class="col-md-7 d-flex align-items-center">
+                                    <small class="text-muted col-md-5 text-end">If you are not<br>registered yet:</small>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-6">
                                         <a href="{{ route('register.form') }}" class="btn btn-outline-primary d-flex justify-content-center">Registration</a>
                                     </div>
                                 </div>
