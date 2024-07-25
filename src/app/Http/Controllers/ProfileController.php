@@ -2,36 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileEditFormRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Services\ProfileService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function show(ProfileService $profileService):View
+    protected object $profileService;
+
+    public function __construct(ProfileService $profileService)
     {
-        $profile = $profileService->getUserProfile();
-        return view('profile.profile', ['profile' => $profile]);
+        $this->profileService = $profileService;
     }
 
-    public function showEditForm(ProfileService $profileService):View
+    public function show(int $profileId): View
     {
-        $profile = $profileService->getUserProfile();
-
-        return view('profile.profile_edit', ['profile' => $profile]);
+        $profile = $this->profileService->getProfile($profileId);
+        return view('profile.show', compact('profile'));
     }
 
-    public function edit(ProfileEditFormRequest $request, ProfileService $profileService)
+    public function edit(int $profileId): View
     {
-        $data = $request->only('full_name', 'age', 'city', 'info');
-        $profile = $profileService->getUserProfile();
+        $profile = $this->profileService->getProfile($profileId);
+        return view('profile.edit', compact('profile'));
+    }
 
-        if($request->hasFile('photo')){
-            $photo = $request->file('photo');
-            $profileService->editProfilePhoto($profile, $photo);
-        }
-        $profileService->editProfile($profile, $data);
+    public function update(ProfileRequest $request, int $profileId): RedirectResponse
+    {
+        $data = $request->only('full_name', 'age', 'city', 'info', 'photo');
+        $this->profileService->updateProfile($profileId, $data);
 
-        return redirect()->route('profile.show');
+        return redirect()->route('profile.show', ['profile' => $profileId]);
     }
 }

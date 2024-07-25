@@ -2,28 +2,29 @@
 
 namespace App\Services;
 
+use App\Contracts\ImageStorageServiceContract;
 use App\Models\Profile;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileService
 {
-    public function getUserProfile(): Profile
+    protected object $imageStorageService;
+    public function __construct(ImageStorageServiceContract $imageStorageService)
     {
-        return Auth::user()->profile;
+        $this->imageStorageService = $imageStorageService;
     }
 
-    public function editProfile($profile, array $data): void
+    public function getProfile(int $profileId): Profile
     {
-        $profile->update($data);
+        return Profile::findOrFail($profileId);
     }
 
-    public function editProfilePhoto($profile, $photo): void
+    public function updateProfile(int $profileId, array $data): bool
     {
-        if ($profile->photo_path && Storage::disk('public')->exists($profile->photo_path)) {
-            Storage::disk('public')->delete($profile->photo_path);
+        $profile = $this->getProfile($profileId);
+        if(isset($data['photo'])){
+            $data['photo_path'] = $this->imageStorageService->update($data['photo'], $profile->photo_path, 'profile_photos');
+            unset($data['photo']);
         }
-        $path = $photo->store('profile_photos', 'public');
-        $profile->update(['photo_path' => $path]);
+        return $profile->update($data);
     }
 }
