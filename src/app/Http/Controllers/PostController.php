@@ -57,7 +57,7 @@ class PostController extends Controller
         return view('post.edit', compact('post'));
     }
 
-    public function update(PostRequest $request, $postId): RedirectResponse
+    public function update(PostRequest $request, int $postId): RedirectResponse
     {
         $data = $request->only('title', 'content', 'photo');
         $this->postService->updatePost($postId, $data);

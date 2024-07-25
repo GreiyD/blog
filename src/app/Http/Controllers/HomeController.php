@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\PostService;
+use Illuminate\Support\Facades\Request;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
         $this->postService = $postService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $posts = $this->postService->getAllPosts();
         return view('home', compact('posts'));
