@@ -22,8 +22,8 @@ class Post extends Model implements Reactionable
     ];
     protected $appends = [
         'likes',
-        'dislikes']
-    ;
+        'dislikes'
+    ];
     protected $casts = [
         'status' => PostStatus::class,
     ];
