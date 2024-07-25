@@ -8,9 +8,20 @@ use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
+    public function createLogin(): View
+    {
+        return view('auth.login');
+    }
+
+    public function createRegister(): View
+    {
+        return view('auth.register');
+    }
+
     public function login(LoginFormRequest $request): RedirectResponse
     {
        $data = $request->only('email', 'password');
