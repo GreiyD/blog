@@ -42,7 +42,7 @@ class PostService
 
     public function getAllPosts(): LengthAwarePaginator
     {
-        return Post::withCount([
+        return Post::with(['user:id,nickname', 'user.profile:id,photo_path,user_id'])->withCount([
             'reactions as likes' => function ($query) {
                 $query->where('type', ReactionType::Like->value);
             },
