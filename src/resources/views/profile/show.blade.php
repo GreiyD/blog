@@ -28,7 +28,7 @@
                                 <p>{{ $profile->info ?? 'Nothing to say' }}</p>
                             </div>
                             <div class="d-flex">
-                                <a href="{{route('profile.edit.form')}}" class="btn btn-primary me-2">Edit Profile</a>
+                                <a href="{{route('profile.edit', $profile->id)}}" class="btn btn-primary me-2">Edit Profile</a>
                                 <form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
                                     @csrf
                                     @method('DELETE')

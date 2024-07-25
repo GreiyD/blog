@@ -18,7 +18,7 @@
 
                         <div class="row justify-content-between">
                             <div class="col-6 text-start">
-                                <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                             </div>
                             <div class="col-6 text-end">
                                 <a type="button" class="btn btn-outline-success" href="" onclick="event.preventDefault(); document.getElementById('like').submit();">

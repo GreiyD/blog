@@ -10,7 +10,7 @@
                         <h2>Edit Profile</h2>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('profile.edit') }}" method="POST" enctype="multipart/form-data" style="background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                        <form action="{{ route('profile.update', $profile->id ) }}" method="POST" enctype="multipart/form-data" style="background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                             @csrf
                             @method('PUT')
                             <div class="mb-3 text-center">
@@ -52,7 +52,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
-                            <a href="{{route('profile.show')}}" class="btn btn-secondary">Back</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                         </form>
                     </div>
                 </div>
